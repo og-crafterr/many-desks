@@ -2,8 +2,8 @@ import { viewerHello, viewerKeys, proof, equal, b64, unb64, Channel, concat, par
 
 const $ = id => document.getElementById(id);
 const store = {
-  get(k, d) { try { return JSON.parse(localStorage.getItem('ogdesk.' + k)) ?? d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem('ogdesk.' + k, JSON.stringify(v)); } catch { /* private mode */ } },
+  get(k, d) { try { return JSON.parse(localStorage.getItem('manydesks.' + k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('manydesks.' + k, JSON.stringify(v)); } catch { /* private mode */ } },
 };
 const PRESETS = { low: { fps: 15, maxHeight: 720, bitrate: 1200 }, balanced: { fps: 30, maxHeight: 1080, bitrate: 6000 }, high: { fps: 60, maxHeight: 0, bitrate: 15000 } };
 let info = {}, s = null;
@@ -60,15 +60,15 @@ $('form').addEventListener('submit', e => {
 
 // ---- connection ----
 function start(url, password) {
-  if (location.protocol === 'https:' && url.startsWith('ws:')) throw new Error('A secure page can\'t reach that address. Open OG Desk on your own computer (http://127.0.0.1:7878) instead.');
+  if (location.protocol === 'https:' && url.startsWith('ws:')) throw new Error('A secure page can\'t reach that address. Open Many Desks on your own computer (http://127.0.0.1:7878) instead.');
   const ws = new WebSocket(url), hello = viewerHello();
   ws.binaryType = 'arraybuffer';
   const me = s = { ws, stage: 0, seq: -1, frames: 0, bytes: 0, transfers: new Map(), nextId: 1, timers: [] };
   $('go').disabled = true; status('Connecting…');
-  const late = setTimeout(() => fail('No answer. Check the address, and that the computer is on and running OG Desk.'), 15000);
+  const late = setTimeout(() => fail('No answer. Check the address, and that the computer is on and running Many Desks.'), 15000);
   function fail(message) { if (s === me) end(message, true); }
   ws.onopen = () => ws.send(JSON.stringify(hello.message));
-  ws.onclose = () => fail(me.opened ? 'The connection ended.' : me.denied || 'Couldn\'t connect. Check the address, and that the computer is on and running OG Desk.');
+  ws.onclose = () => fail(me.opened ? 'The connection ended.' : me.denied || 'Couldn\'t connect. Check the address, and that the computer is on and running Many Desks.');
   ws.onmessage = async e => {
     if (s !== me) return;
     try {
@@ -99,7 +99,7 @@ function end(message, bad) {
   try { me.decoder?.close(); } catch { /* already closed */ }
   $('desk').hidden = true; $('home').hidden = false; $('filePanel').hidden = true; $('go').disabled = false; $('transfers').replaceChildren();
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-  status(message || '', bad); document.title = 'OG Desk';
+  status(message || '', bad); document.title = 'Many Desks';
 }
 
 function onMessage(me, b) {
@@ -130,7 +130,7 @@ function onMessage(me, b) {
 function opened(me, m) {
   me.opened = true; me.monitors = m.monitors;
   remember(m.name); showSaved(); status('');
-  $('home').hidden = true; $('desk').hidden = false; $('title').textContent = m.name; document.title = `${m.name} – OG Desk`;
+  $('home').hidden = true; $('desk').hidden = false; $('title').textContent = m.name; document.title = `${m.name} – Many Desks`;
   $('monitor').hidden = m.monitors.length < 2;
   $('monitor').replaceChildren(...m.monitors.map((x, i) => new Option(`Screen ${i + 1} (${x.width}×${x.height})`, i)));
   $('note').textContent = 'Waiting for the first picture…';

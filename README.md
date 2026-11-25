@@ -1,4 +1,6 @@
-# OG Desk
+# Many Desks
+
+By OGCraft.
 
 Remote desktop for your own devices. Free, open source, self-hosted, no session limits.
 
@@ -15,7 +17,7 @@ On Linux also: `xdotool xclip zenity x11-xserver-utils`, in an X11 (not Wayland)
 
 ```sh
 npm install
-node bin/og-desk.js host
+node bin/many-desks.js host
 ```
 
 It prints this computer's password. On Windows you can double-click `start-host.cmd`.
@@ -24,7 +26,7 @@ To connect **to** another computer, open http://127.0.0.1:7878 and enter its add
 By default someone at the computer must allow each connection. For computers you reach when nobody is there:
 
 ```sh
-node bin/og-desk.js unattended on
+node bin/many-desks.js unattended on
 ```
 
 Anyone with the password then has full control of that computer, so keep it private.
@@ -33,14 +35,14 @@ Anyone with the password then has full control of that computer, so keep it priv
 
 | | Set up | Address to enter |
 |---|---|---|
-| Same home network | `og-desk lan on` on the host, and allow Node.js through its firewall for private networks | `192.168.1.20` |
-| Over the internet | run a relay once, then `og-desk use-relay <url> <token>` on each host | the 12-digit address |
+| Same home network | `many-desks lan on` on the host, and allow Node.js through its firewall for private networks | `192.168.1.20` |
+| Over the internet | run a relay once, then `many-desks use-relay <url> <token>` on each host | the 12-digit address |
 | Tailscale (optional) | nothing: used automatically | `100.x.y.z` |
 
-(`og-desk` is short for `node bin/og-desk.js`; `npm link` gives you the short command.)
+(`many-desks` is short for `node bin/many-desks.js`; `npm link` gives you the short command.)
 
 H.264 and the clipboard need a secure page, which is a browser rule: open the viewer from
-`http://127.0.0.1:7878` on a computer running OG Desk, or from an https relay. On a plain `http://192.168…` page the
+`http://127.0.0.1:7878` on a computer running Many Desks, or from an https relay. On a plain `http://192.168…` page the
 viewer uses JPEG, which needs more bandwidth (about 23 Mb/s was measured at 1080p), and the clipboard isn't shared.
 
 With Tailscale, `tailscale serve 7878` on the host gives the page an https address for your own devices, which phones need
@@ -52,9 +54,9 @@ Routers stop computers on different networks from reaching each other, so connec
 machine both sides can reach: a small VPS, or a home server with a domain. It must have https.
 
 ```sh
-export OG_DESK_RELAY_TOKEN=...   # make one up, or run without it and it suggests one
-docker build -t og-desk-relay .
-docker run -d --restart unless-stopped -p 127.0.0.1:7879:7879 -e OG_DESK_RELAY_TOKEN -e OG_DESK_TRUST_PROXY=1 og-desk-relay
+export MANY_DESKS_RELAY_TOKEN=...   # make one up, or run without it and it suggests one
+docker build -t many-desks-relay .
+docker run -d --restart unless-stopped -p 127.0.0.1:7879:7879 -e MANY_DESKS_RELAY_TOKEN -e MANY_DESKS_TRUST_PROXY=1 many-desks-relay
 ```
 
 Put it behind a web server with https, for example Caddy:
@@ -67,13 +69,13 @@ desk.example.com {
 }
 ```
 
-Then, on each computer: `og-desk use-relay https://desk.example.com <token>`. Open https://desk.example.com anywhere to connect.
+Then, on each computer: `many-desks use-relay https://desk.example.com <token>`. Open https://desk.example.com anywhere to connect.
 
 The token only lets hosts register. Viewers need the 12-digit address and the password.
-Set `OG_DESK_TRUST_PROXY=1` only behind a proxy that overwrites `X-Forwarded-For`.
+Set `MANY_DESKS_TRUST_PROXY=1` only behind a proxy that overwrites `X-Forwarded-For`.
 
 When both routers allow it, video takes a direct path instead of going through the relay. Across the internet that
-usually needs a STUN server, which learns your public address: `og-desk stun stun:your.server:3478`. None is set by default.
+usually needs a STUN server, which learns your public address: `many-desks stun stun:your.server:3478`. None is set by default.
 
 ## Security
 
@@ -82,10 +84,10 @@ usually needs a STUN server, which learns your public address: `og-desk stun stu
 - **The page itself is the limit of that.** Whoever serves the viewer page could change it to steal the password. Use a
   relay you run over https, or open the viewer from your own computer. Plain http on a network you don't trust isn't safe.
 - Generated passwords have about 84 bits. Choose your own only if it's long and random; a guessable one can be attacked offline by a fake host.
-- The host listens on 127.0.0.1 and Tailscale only, until you run `og-desk lan on`. Don't forward its port on your router.
+- The host listens on 127.0.0.1 and Tailscale only, until you run `many-desks lan on`. Don't forward its port on your router.
 - Five wrong passwords block that source for a while. Through a relay this is per viewer address.
-- The password and identity key are stored unencrypted in `~/.og-desk/config.json`. "Remember the password" stores it in that browser.
-- File transfer reaches only `~/OG-Desk` and never overwrites. A connected viewer can do anything else with the mouse and keyboard, though.
+- The password and identity key are stored unencrypted in `~/.many-desks/config.json`. "Remember the password" stores it in that browser.
+- File transfer reaches only `~/Many-Desks` and never overwrites. A connected viewer can do anything else with the mouse and keyboard, though.
 
 This hasn't had an independent security review.
 

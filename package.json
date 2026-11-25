@@ -1,6 +1,7 @@
 {
-  "name": "og-desk",
+  "name": "many-desks",
   "version": "0.1.0",
+  "author": "OGCraft",
   "description": "Self-hosted, open-source remote desktop for your own devices",
   "type": "module",
   "license": "MIT",
@@ -9,12 +10,12 @@
     "node": ">=22"
   },
   "bin": {
-    "og-desk": "bin/og-desk.js"
+    "many-desks": "bin/many-desks.js"
   },
   "scripts": {
     "test": "node --test --test-timeout=60000",
-    "host": "node bin/og-desk.js host",
-    "relay": "node bin/og-desk.js relay",
+    "host": "node bin/many-desks.js host",
+    "relay": "node bin/many-desks.js relay",
     "e2e": "node e2e/browser.e2e.js"
   },
   "dependencies": {

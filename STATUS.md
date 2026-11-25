@@ -8,8 +8,9 @@ How to use it, security and limits: [README.md](README.md).
 - Code complete for a first version; 13/13 unit tests pass (rerun 2026-11-25).
 - The Chrome suite passed after the last code change. An earlier `--real-screen` run also passed, before the
   "own computer" scenario was added.
-- Git: first commit made on `main`, 2026-11-25. No remote. Nothing is published.
-- Never started for real: no `~/.og-desk` folder, so the password is created on first start. Nothing is running.
+- Renamed from OG Desk to Many Desks by OGCraft on 2026-11-25. The project folder is still called `og-desk`.
+- Git: public at https://github.com/og-crafterr/many-desks (`main`). Commits use the OGCraft name and a no-reply address, set in this repository only.
+- Never started for real: no `~/.many-desks` folder, so the password is created on first start. Nothing is running.
 - No firewall, startup, service or Tailscale change was made. Windows has no firewall rule for node.exe, so other
   devices will probably be blocked until Node.js is allowed on private networks.
 
@@ -30,7 +31,6 @@ The README's "Tested and not tested" section is the one list of what has and has
 
 - Where the relay lives (VPS or home server, domain). Without it, internet access needs Tailscale.
 - Whether to install the Windows service.
-- Whether to publish the repository.
 
 ## Decisions made, and why
 
@@ -49,14 +49,14 @@ The README's "Tested and not tested" section is the one list of what has and has
 
 | Path | What it does |
 |---|---|
-| [bin/og-desk.js](bin/og-desk.js) | Commands |
+| [bin/many-desks.js](bin/many-desks.js) | Commands |
 | [src/shared/secure.js](src/shared/secure.js) | Encryption, used by host and browser |
 | [src/shared/web.js](src/shared/web.js) | Page serving (fixed file list), CSP, Origin check |
 | [src/host/index.js](src/host/index.js) | Listening, relay registration |
 | [src/host/session.js](src/host/session.js) | One viewer: sign-in, approval, video, input, files |
 | [src/host/capture.js](src/host/capture.js) | ffmpeg and encoder choice |
 | [src/host/platform-win32.js](src/host/platform-win32.js), [platform-linux.js](src/host/platform-linux.js), [keys.js](src/host/keys.js) | Input, clipboard, prompt, key table |
-| [src/host/files.js](src/host/files.js), [config.js](src/host/config.js) | Shared folder; settings in `~/.og-desk` |
+| [src/host/files.js](src/host/files.js), [config.js](src/host/config.js) | Shared folder; settings in `~/.many-desks` |
 | [src/relay/index.js](src/relay/index.js) | Relay |
 | [web/](web/) | Viewer |
 | [test/](test/), [e2e/](e2e/) | Unit tests; Chrome suite |

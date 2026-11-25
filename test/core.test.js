@@ -12,7 +12,7 @@ import { listenAddresses, startHost } from '../src/host/index.js';
 import { newPassword, idOf } from '../src/host/config.js';
 import { startRelay } from '../src/relay/index.js';
 
-const tmp = () => fs.mkdtemp(path.join(os.tmpdir(), 'ogdesk-'));
+const tmp = () => fs.mkdtemp(path.join(os.tmpdir(), 'manydesks-'));
 const TOKEN = 'a-test-token-of-some-length';
 function identity() {
   const k = crypto.generateKeyPairSync('ed25519');

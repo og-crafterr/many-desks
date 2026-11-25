@@ -50,5 +50,5 @@ export const clipboard = {
     return true;
   },
 };
-export const ask = async text => (await run('zenity', ['--question', '--title=OG Desk', '--timeout=30', '--default-cancel', '--text=' + text.replace(/[<&]/g, '')])) !== null;
+export const ask = async text => (await run('zenity', ['--question', '--title=Many Desks', '--timeout=30', '--default-cancel', '--text=' + text.replace(/[<&]/g, '')])) !== null;
 export const lock = () => run('loginctl', ['lock-session']);

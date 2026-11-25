@@ -4,7 +4,7 @@ import os from 'node:os';
 import crypto from 'node:crypto';
 import { normalizePassword } from '../shared/secure.js';
 
-export const dataDir = () => process.env.OG_DESK_DATA || path.join(os.homedir(), '.og-desk');
+export const dataDir = () => process.env.MANY_DESKS_DATA || path.join(os.homedir(), '.many-desks');
 const file = () => path.join(dataDir(), 'config.json');
 
 /** 17 characters from a 31-letter alphabet without look-alikes: about 84 bits. */
@@ -36,7 +36,7 @@ export function load() {
   def('relay', null); // { url, token }
   def('stun', []); // e.g. ["stun:stun.example.com:3478"]
   def('p2p', true);
-  def('sharedFolder', () => path.join(os.homedir(), 'OG-Desk'));
+  def('sharedFolder', () => path.join(os.homedir(), 'Many-Desks'));
   if (!c.identity) {
     const k = crypto.generateKeyPairSync('ed25519');
     c.identity = { public: k.publicKey.export({ type: 'spki', format: 'pem' }), private: k.privateKey.export({ type: 'pkcs8', format: 'pem' }) };

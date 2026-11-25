@@ -14,7 +14,7 @@ export function startRelay({ port = 7879, address = '127.0.0.1', token, trustPro
   const sweep = setInterval(() => attempts.clear(), 60000); sweep.unref();
   const limited = (ip, max) => { const n = (attempts.get(ip) || 0) + 1; attempts.set(ip, n); return n > max; };
   const ipOf = req => (trustProxy && String(req.headers['x-forwarded-for'] || '').split(',').pop().trim()) || req.socket.remoteAddress;
-  const server = http.createServer((q, s) => serve(q, s, { app: 'og-desk', kind: 'relay' }));
+  const server = http.createServer((q, s) => serve(q, s, { app: 'many-desks', kind: 'relay' }));
   const wss = new WebSocketServer({ noServer: true, maxPayload: 1 << 20, perMessageDeflate: false });
 
   server.on('upgrade', (req, socket, head) => {
@@ -47,7 +47,7 @@ export function startRelay({ port = 7879, address = '127.0.0.1', token, trustPro
         const m = JSON.parse(d);
         if (!crypto.timingSafeEqual(sha(m.token), sha(token))) return no('Wrong relay token.');
         const pub = crypto.createPublicKey(String(m.public));
-        if (pub.asymmetricKeyType !== 'ed25519' || !crypto.verify(null, Buffer.from(`og-desk-relay:${nonce}:${token}`), pub, Buffer.from(String(m.sig), 'base64'))) return no('Bad signature.');
+        if (pub.asymmetricKeyType !== 'ed25519' || !crypto.verify(null, Buffer.from(`many-desks-relay:${nonce}:${token}`), pub, Buffer.from(String(m.sig), 'base64'))) return no('Bad signature.');
         // The address comes from the key, so nobody can take over another computer's address.
         const id = idOf(pub.export({ type: 'spki', format: 'pem' }));
         hosts.get(id)?.terminate();

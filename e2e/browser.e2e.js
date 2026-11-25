@@ -25,7 +25,7 @@ const identity = { public: k.publicKey.export({ type: 'spki', format: 'pem' }), 
 const relay = await startRelay({ port: 0, token: TOKEN, log() {} });
 let registered; const ready = new Promise(r => { registered = r; });
 const addresses = listenAddresses(false);
-const config = { id: idOf(identity.public), name: 'e2e-host', password: 'abcd-efgh-jkmn-pqrst', salt: crypto.randomBytes(16).toString('base64'), port: 18788, unattended: true, p2p: true, stun: [], identity, relay: { url: `http://127.0.0.1:${relay.port}`, token: TOKEN }, sharedFolder: await fs.mkdtemp(path.join(os.tmpdir(), 'ogdesk-')) };
+const config = { id: idOf(identity.public), name: 'e2e-host', password: 'abcd-efgh-jkmn-pqrst', salt: crypto.randomBytes(16).toString('base64'), port: 18788, unattended: true, p2p: true, stun: [], identity, relay: { url: `http://127.0.0.1:${relay.port}`, token: TOKEN }, sharedFolder: await fs.mkdtemp(path.join(os.tmpdir(), 'manydesks-')) };
 const logs = [];
 const host = await startHost(config, { platform, addresses, log: m => logs.push(m), onRegistered: registered, ...(real ? {} : { testCapture: { platform: 'test' } }) });
 await ready;

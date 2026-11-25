@@ -72,7 +72,7 @@ export class Session {
       if (this.ctx.asking) { this.chan.json({ t: 'denied', message: 'Another request is already waiting for an answer.' }); return this.close('busy'); }
       this.ctx.asking = true;
       let yes = false;
-      try { yes = await platform.ask(`Someone who knows this computer's OG Desk password wants to see and control it.\n\nFrom: ${this.who}\n\nAllow it?`); }
+      try { yes = await platform.ask(`Someone who knows this computer's Many Desks password wants to see and control it.\n\nFrom: ${this.who}\n\nAllow it?`); }
       finally { this.ctx.asking = false; }
       if (this.state === 'closed') return;
       if (!yes) { this.chan.json({ t: 'denied', message: 'The request was declined or nobody answered.' }); return this.close('declined'); }

@@ -88,5 +88,5 @@ export const clipboard = {
   },
 };
 /** Asks the person at this computer. No answer in 30 seconds means no. */
-export const ask = text => new Promise(r => MessageBoxTimeout.async(null, text, 'OG Desk', 0x4 | 0x20 | 0x100 | 0x1000 | 0x10000 | 0x40000, 0, 30000, (e, v) => r(!e && v === 6)));
+export const ask = text => new Promise(r => MessageBoxTimeout.async(null, text, 'Many Desks', 0x4 | 0x20 | 0x100 | 0x1000 | 0x10000 | 0x40000, 0, 30000, (e, v) => r(!e && v === 6)));
 export const lock = () => LockWorkStation();

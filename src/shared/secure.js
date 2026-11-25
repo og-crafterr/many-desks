@@ -79,11 +79,11 @@ export class Channel {
 export const parseJson = bytes => JSON.parse(dec.decode(bytes.subarray(1)));
 
 function deriveKeys(shared, psk, transcript) {
-  const okm = hkdf(sha256, concat(shared, psk), sha256(transcript), enc.encode('og-desk v1'), 192);
+  const okm = hkdf(sha256, concat(shared, psk), sha256(transcript), enc.encode('many-desks v1'), 192);
   const k = i => okm.slice(i * 32, i * 32 + 32);
   return { v2h: k(0), h2v: k(1), proofV: k(2), proofH: k(3), p2pV2h: k(4), p2pH2v: k(5) };
 }
-const transcriptOf = (vpub, vn, hpub, hn, salt) => concat(enc.encode('og-desk'), Uint8Array.of(VERSION), vpub, vn, hpub, hn, salt);
+const transcriptOf = (vpub, vn, hpub, hn, salt) => concat(enc.encode('many-desks'), Uint8Array.of(VERSION), vpub, vn, hpub, hn, salt);
 const field = (value, n) => {
   const b = unb64(value);
   if (b.length !== n) throw new Error('bad handshake');

@@ -52,7 +52,7 @@ export async function startHost(config, options = {}) {
   const wss = new WebSocketServer({ noServer: true, maxPayload: 1 << 20, perMessageDeflate: false });
   const servers = [];
   for (const address of options.addresses || listenAddresses(config.lan)) {
-    const server = http.createServer((q, s) => serve(q, s, { app: 'og-desk', kind: 'host', name: config.name }));
+    const server = http.createServer((q, s) => serve(q, s, { app: 'many-desks', kind: 'host', name: config.name }));
     server.on('upgrade', (req, socket, head) => {
       socket.on('error', () => {});
       if (new URL(req.url, 'http://x').pathname !== '/connect' || !originAllowed(req)) { socket.end('HTTP/1.1 403 Forbidden\r\n\r\n'); return; }
@@ -63,7 +63,7 @@ export async function startHost(config, options = {}) {
       servers.push(server);
       log(`listening on http://${address}:${server.address().port}`);
     } catch (e) {
-      if (address === '127.0.0.1') throw new Error(`Port ${config.port} is in use. Is OG Desk already running?`);
+      if (address === '127.0.0.1') throw new Error(`Port ${config.port} is in use. Is Many Desks already running?`);
       log(`can't listen on ${address}: ${e.message}`);
     }
   }
@@ -79,7 +79,7 @@ export async function startHost(config, options = {}) {
     ws.on('message', d => {
       let m; try { m = JSON.parse(d); } catch { return; }
       if (m.t === 'challenge') {
-        const signed = `og-desk-relay:${m.nonce}:${config.relay.token}`;
+        const signed = `many-desks-relay:${m.nonce}:${config.relay.token}`;
         ws.send(JSON.stringify({ t: 'register', public: config.identity.public, token: config.relay.token, sig: crypto.sign(null, Buffer.from(signed), config.identity.private).toString('base64') }));
       } else if (m.t === 'registered') { delay = 1000; log(`reachable through the relay as ${m.id}`); options.onRegistered?.(m.id); }
       else if (m.t === 'error') { delay = 60000; log(`relay refused this computer: ${m.message}`); }
