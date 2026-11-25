@@ -16,6 +16,8 @@ You need [Node.js 22+](https://nodejs.org) and [ffmpeg](https://ffmpeg.org) on t
 On Linux also: `xdotool xclip zenity x11-xserver-utils`, in an X11 (not Wayland) session.
 
 ```sh
+git clone https://github.com/og-crafterr/many-desks
+cd many-desks
 npm install
 node bin/many-desks.js host
 ```

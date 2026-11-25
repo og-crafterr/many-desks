@@ -10,4 +10,7 @@ When you finish work, update STATUS.md, and the README's "Tested and not tested"
 - Plain JavaScript modules, no build step. `src/shared/secure.js` also runs in the browser, so no Node imports there.
 - A new web file must be added to the list in `src/shared/web.js`.
 - Don't read or copy RustDesk code (AGPL); this project is MIT.
-- Keep device names, addresses, passwords and tokens out of the repository.
+- **The repository is public.** Keep device names, addresses, emails, passwords and tokens out of files and commit messages.
+- Commit and push only when the owner asks. Commits use OGCraft's no-reply address: check `git config user.email` first.
+- Pushing needs the `og-crafterr` GitHub account active (`gh auth status`). To use its sign-in:
+  `git -c credential.helper= -c credential.helper='!gh auth git-credential' push`

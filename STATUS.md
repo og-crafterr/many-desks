@@ -6,10 +6,11 @@ How to use it, security and limits: [README.md](README.md).
 ## Where it stands
 
 - Code complete for a first version; 13/13 unit tests pass (rerun 2026-11-25).
-- The Chrome suite passed after the last code change. An earlier `--real-screen` run also passed, before the
+- The Chrome suite passed after the rename, the last code change (2026-11-25). An earlier `--real-screen` run also passed, before the
   "own computer" scenario was added.
 - Renamed from OG Desk to Many Desks by OGCraft on 2026-11-25. The project folder is still called `og-desk`.
-- Git: public at https://github.com/og-crafterr/many-desks (`main`). Commits use the OGCraft name and a no-reply address, set in this repository only.
+- Git: public at https://github.com/og-crafterr/many-desks (`main`), no issues yet, no release or CI.
+  Commits use the OGCraft name and a no-reply address, set in the local clone only; set them again in a new clone.
 - Never started for real: no `~/.many-desks` folder, so the password is created on first start. Nothing is running.
 - No firewall, startup, service or Tailscale change was made. Windows has no firewall rule for node.exe, so other
   devices will probably be blocked until Node.js is allowed on private networks.
@@ -20,6 +21,7 @@ The README's "Tested and not tested" section is the one list of what has and has
 
 1. **Try it between two real devices** (needs the owner): run `start-host.cmd`, allow Node.js on private networks,
    open the host's address from a phone over Tailscale, press Yes on the prompt. Then `lan on` over Wi-Fi.
+   Put the results in the README, and fix what breaks before starting anything new.
 2. **Windows service**: start with Windows, lock and sign-in screens, UAC, Ctrl+Alt+Del. The biggest gap. It needs
    administrator rights, so agree it with the owner first. Design not started.
 3. **Linux host**: never run. First check whether `xdotool -` acts on each line as it arrives; if it waits for the end of
@@ -31,6 +33,7 @@ The README's "Tested and not tested" section is the one list of what has and has
 
 - Where the relay lives (VPS or home server, domain). Without it, internet access needs Tailscale.
 - Whether to install the Windows service.
+- Whether to rename the local folder to `many-desks` (close the editor first).
 
 ## Decisions made, and why
 
