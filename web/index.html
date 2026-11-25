@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#10201d">
+<title>OG Desk</title>
+<link rel="icon" href="/icon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main id="home">
+  <header><img src="/icon.svg" alt="" width="36" height="36"><h1>OG Desk</h1></header>
+  <form id="form">
+    <label>Computer address
+      <input id="address" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="192.168.1.20 or 123 456 789 012">
+    </label>
+    <label id="relayRow" hidden>Relay
+      <input id="relay" type="url" autocomplete="off" placeholder="https://relay.example.com">
+    </label>
+    <label>Password
+      <input id="password" type="password" required autocomplete="off">
+    </label>
+    <label class="check"><input id="remember" type="checkbox"> Remember the password in this browser</label>
+    <button class="primary" id="go">Connect</button>
+    <p id="status" role="status"></p>
+  </form>
+  <section>
+    <h2>Your computers</h2>
+    <ul id="saved"></ul>
+  </section>
+</main>
+<div id="desk" hidden>
+  <nav id="bar" aria-label="Session">
+    <strong id="title"></strong>
+    <span id="stats"></span>
+    <select id="monitor" aria-label="Screen" hidden></select>
+    <select id="quality" aria-label="Quality">
+      <option value="low">Low data</option><option value="balanced" selected>Balanced</option><option value="high">Best picture</option>
+    </select>
+    <select id="scale" aria-label="Size"><option value="fit">Fit</option><option value="actual">Actual size</option></select>
+    <label class="check"><input type="checkbox" id="viewOnly"> View only</label>
+    <label class="check"><input type="checkbox" id="clip" checked> Clipboard</label>
+    <button id="keys">Keys</button>
+    <button id="kbd">Keyboard</button>
+    <button id="files">Files</button>
+    <button id="full">Full screen</button>
+    <button id="leave" class="danger">Disconnect</button>
+  </nav>
+  <div id="extra" hidden aria-label="Special keys"></div>
+  <div id="stage" tabindex="0"><canvas id="screen" width="16" height="9" aria-label="Remote screen"></canvas><p id="note" role="status"></p></div>
+  <textarea id="typing" aria-label="Type on the remote computer" autocapitalize="none" autocomplete="off" spellcheck="false"></textarea>
+  <aside id="filePanel" hidden aria-label="Files">
+    <h2>Files</h2>
+    <p>Files go in and out of the remote computer's OG-Desk folder. You can also drop files on the screen.</p>
+    <label class="button">Send files<input id="upload" type="file" multiple></label>
+    <button id="refresh">Refresh</button>
+    <button id="closeFiles">Close</button>
+    <ul id="transfers"></ul>
+    <ul id="remote"></ul>
+  </aside>
+</div>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

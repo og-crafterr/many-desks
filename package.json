@@ -1,0 +1,33 @@
+{
+  "name": "og-desk",
+  "version": "0.1.0",
+  "description": "Self-hosted, open-source remote desktop for your own devices",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "og-desk": "bin/og-desk.js"
+  },
+  "scripts": {
+    "test": "node --test --test-timeout=60000",
+    "host": "node bin/og-desk.js host",
+    "relay": "node bin/og-desk.js relay",
+    "e2e": "node e2e/browser.e2e.js"
+  },
+  "dependencies": {
+    "@noble/ciphers": "^2.4.0",
+    "@noble/curves": "^2.4.0",
+    "@noble/hashes": "^2.4.0",
+    "ws": "^8.23.0"
+  },
+  "optionalDependencies": {
+    "koffi": "^3.3.8",
+    "node-datachannel": "^0.33.6"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.1"
+  }
+}

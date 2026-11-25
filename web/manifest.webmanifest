@@ -1,0 +1,1 @@
+{ "name": "OG Desk", "short_name": "OG Desk", "start_url": "/", "display": "standalone", "background_color": "#0d1615", "theme_color": "#10201d", "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }] }
